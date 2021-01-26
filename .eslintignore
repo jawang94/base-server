@@ -1,0 +1,9 @@
+codegen.yml
+/src/types/*
+.history
+node_modules
+.eslintcache
+dist
+__snapshots__
+package.json
+*.log
