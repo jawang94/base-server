@@ -69,20 +69,28 @@ const resolvers: Resolvers = {
     ): Promise<User | null> {
       return injector.get(Auth).signUp({ name, email, password, passwordConfirm });
     },
-    async appleSignIn(_, { token }, { injector }): Promise<User | null> {
+    async appleSignIn(_: any, { token }: any, { injector }: any): Promise<User | null> {
       return injector.get(Auth).appleSignIn(token);
     },
     async appleSignUp(
-      _,
-      { firstName, lastName, email, token },
-      { injector },
+      _: any,
+      { firstName, lastName, email, token }: any,
+      { injector }: any,
     ): Promise<User | null> {
       return injector.get(Auth).appleSignUp({ firstName, lastName, email, token });
     },
-    async googleSignIn(_, { id, email, fullName, imageURL }, { injector }): Promise<User | null> {
+    async googleSignIn(
+      _: any,
+      { id, email, fullName, imageURL }: any,
+      { injector }: any,
+    ): Promise<User | null> {
       return injector.get(Auth).googleSignIn({ id, email, fullName, imageURL });
     },
-    async googleSignUp(_, { id, email, fullName, imageURL }, { injector }): Promise<User | null> {
+    async googleSignUp(
+      _: any,
+      { id, email, fullName, imageURL }: any,
+      { injector }: any,
+    ): Promise<User | null> {
       return injector.get(Auth).googleSignUp({ id, email, fullName, imageURL });
     },
   },
