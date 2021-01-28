@@ -35,6 +35,7 @@ export type Mutation = {
   appleSignUp?: Maybe<User>;
   googleSignIn?: Maybe<User>;
   googleSignUp?: Maybe<User>;
+  resizeImage?: Maybe<ReturnObject>;
   signIn?: Maybe<User>;
   signUp?: Maybe<User>;
 };
@@ -64,6 +65,13 @@ export type MutationGoogleSignUpArgs = {
   imageURL: Scalars['String'];
 };
 
+export type MutationResizeImageArgs = {
+  url: Scalars['String'];
+  height?: Maybe<Scalars['Int']>;
+  width: Scalars['Int'];
+  format?: Maybe<Scalars['String']>;
+};
+
 export type MutationSignInArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -79,6 +87,11 @@ export type MutationSignUpArgs = {
 export type Subscription = {
   __typename?: 'Subscription';
   _dummy?: Maybe<Scalars['Boolean']>;
+};
+
+export type ReturnObject = {
+  __typename?: 'ReturnObject';
+  image?: Maybe<Scalars['JSONObject']>;
 };
 
 export type User = {
@@ -210,11 +223,12 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Subscription: ResolverTypeWrapper<{}>;
+  ReturnObject: ResolverTypeWrapper<ReturnObject>;
   User: ResolverTypeWrapper<import('../database/db').User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   AppleUser: ResolverTypeWrapper<AppleUser>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -229,11 +243,12 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Mutation: {};
   String: Scalars['String'];
+  Int: Scalars['Int'];
   Subscription: {};
+  ReturnObject: ReturnObject;
   User: import('../database/db').User;
   ID: Scalars['ID'];
   AppleUser: AppleUser;
-  Int: Scalars['Int'];
 }>;
 
 export interface DateTimeScalarConfig
@@ -302,6 +317,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationGoogleSignUpArgs, 'id' | 'email' | 'fullName' | 'imageURL'>
   >;
+  resizeImage?: Resolver<
+    Maybe<ResolversTypes['ReturnObject']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationResizeImageArgs, 'url' | 'width'>
+  >;
   signIn?: Resolver<
     Maybe<ResolversTypes['User']>,
     ParentType,
@@ -326,6 +347,14 @@ export type SubscriptionResolvers<
     ParentType,
     ContextType
   >;
+}>;
+
+export type ReturnObjectResolvers<
+  ContextType = MyContext,
+  ParentType extends ResolversParentTypes['ReturnObject'] = ResolversParentTypes['ReturnObject']
+> = ResolversObject<{
+  image?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type UserResolvers<
@@ -367,6 +396,7 @@ export type Resolvers<ContextType = MyContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  ReturnObject?: ReturnObjectResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   AppleUser?: AppleUserResolvers<ContextType>;
 }>;

@@ -7,10 +7,11 @@ import { GraphQLModule } from '@graphql-modules/core';
 
 import { MyContext } from './context';
 import UsersModule from './modules/users';
+import ImagesModule from './modules/images';
 
 export const rootModule = new GraphQLModule({
   name: 'root',
-  imports: [UsersModule],
+  imports: [UsersModule, ImagesModule],
 });
 
 export const server = new ApolloServer({
